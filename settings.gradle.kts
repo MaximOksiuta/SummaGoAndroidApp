@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SiriusSummaGo"
+rootProject.name = "SummaGo"
 include(":app")
  
