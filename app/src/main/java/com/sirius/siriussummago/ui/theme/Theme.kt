@@ -6,20 +6,22 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 @Immutable
 data class ExtendedColorScheme(
-    val accent: ColorFamily,
-    val orangeAccent: ColorFamily,
+    val accent: ColorFamily = unspecified_scheme,
+    val orangeAccent: ColorFamily = unspecified_scheme,
 )
 
 private val lightScheme = lightColorScheme(
@@ -340,6 +342,20 @@ val extendedDarkHighContrast = ExtendedColorScheme(
     ),
 )
 
+val LocalExColorScheme = staticCompositionLocalOf { ExtendedColorScheme() }
+val LocalExMediumContrastColorScheme = staticCompositionLocalOf {
+    ExtendedColorScheme(
+        accent = extendedLightMediumContrast.accent,
+        orangeAccent = extendedLightMediumContrast.orangeAccent
+    )
+}
+val LocalExHighContrastColorScheme = staticCompositionLocalOf {
+    ExtendedColorScheme(
+        accent = extendedLightHighContrast.accent,
+        orangeAccent = extendedLightHighContrast.orangeAccent
+    )
+}
+
 @Immutable
 data class ColorFamily(
     val color: Color,
@@ -363,7 +379,7 @@ val shapes = Shapes(
 fun SummaGoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable() () -> Unit,
 ) {
     val colorScheme = when {
@@ -376,11 +392,23 @@ fun SummaGoTheme(
         else -> lightScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = AppTypography,
-        content = content,
-        shapes = shapes
-    )
+    val extendedColorScheme = if (darkTheme) extendedDark else extendedLight
+    val extendedMediumContrastColorScheme =
+        if (darkTheme) extendedDarkMediumContrast else extendedLightMediumContrast
+    val extendedHighColorContrastColorScheme =
+        if (darkTheme) extendedDarkHighContrast else extendedLightHighContrast
+
+    CompositionLocalProvider(
+        LocalExColorScheme provides extendedColorScheme,
+        LocalExMediumContrastColorScheme provides extendedMediumContrastColorScheme,
+        LocalExHighContrastColorScheme provides extendedHighColorContrastColorScheme,
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = AppTypography,
+            content = content,
+            shapes = shapes
+        )
+    }
 }
 

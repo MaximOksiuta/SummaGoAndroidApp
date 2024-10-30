@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">SiriusSummaGo</string>
+    <string name="app_name">SummaGo</string>
+    <string name="signInLabel">Вход в аккаунт</string>
+    <string name="emailHint">E-mail</string>
+    <string name="passwordHint">Password</string>
+    <string name="create_new_account_label">Создать новый аккаунт</string>
 </resources>
