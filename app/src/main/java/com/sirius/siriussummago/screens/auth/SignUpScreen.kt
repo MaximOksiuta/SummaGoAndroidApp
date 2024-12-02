@@ -1,6 +1,5 @@
 package com.sirius.siriussummago.screens.auth
 
-
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,15 +38,17 @@ import com.sirius.siriussummago.ui.NextButton
 import com.sirius.siriussummago.ui.theme.LocalDim
 import com.sirius.siriussummago.ui.theme.SummaGoTheme
 
-data class SignInScreenState(
+data class SignUpScreenState(
     val email: MutableState<String> = mutableStateOf(""),
     val password: MutableState<String> = mutableStateOf(""),
-)
+    val passwordConfirm: MutableState<String> = mutableStateOf(""),
+
+    )
 
 @Composable
-fun SignInScreen(
+fun SignUpScreen(
     navController: NavController,
-    screenState: SignInScreenState = remember { SignInScreenState() }
+    screenState: SignUpScreenState = remember { SignUpScreenState() },
 ) {
     Column(
         modifier = Modifier
@@ -74,9 +75,9 @@ fun SignInScreen(
 
         Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
 
-        // Sign in label
+        // Sign up label
         Text(
-            text = stringResource(R.string.sign_in_label),
+            text = stringResource(R.string.sign_up_label),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground
         )
@@ -123,7 +124,7 @@ fun SignInScreen(
             leadingIcon = {
                 Icon(
                     painterResource(R.drawable.ic_key),
-                    contentDescription = "Email icon",
+                    contentDescription = "Password icon",
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             },
@@ -143,16 +144,46 @@ fun SignInScreen(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
+        Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+
+        OutlinedTextField(
+            value = screenState.password.value,
+            onValueChange = { screenState.password.value = it },
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = {
+                Icon(
+                    painterResource(R.drawable.ic_key),
+                    contentDescription = "Password icon",
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.confirm_password_hint),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            },
+            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onPrimaryContainer),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                focusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                errorBorderColor = MaterialTheme.colorScheme.error
+            ),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+        )
+
         Spacer(modifier = Modifier.height(LocalDim.current.spaceExtraSmall))
-        // Create new account button
+        // SignIn button
         Text(
-            stringResource(R.string.create_new_account_label),
+            stringResource(R.string.enter_to_existing_account_label),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    navController.navigate(MainActivityScreens.SignUp.name)
+                    navController.navigate(MainActivityScreens.SignIn.name)
                 }
         )
 
@@ -175,8 +206,8 @@ fun SignInScreen(
     name = "DefaultPreviewLight",
 )
 @Composable
-private fun SignInScreenPreview() {
+private fun SignUpScreenPreview() {
     SummaGoTheme {
-        SignInScreen(rememberNavController())
+        SignUpScreen(rememberNavController())
     }
 }

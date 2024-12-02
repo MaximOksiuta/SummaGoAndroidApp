@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.sirius.siriussummago.screens.auth.SignInScreen
+import com.sirius.siriussummago.screens.auth.SignUp2Screen
+import com.sirius.siriussummago.screens.auth.SignUpScreen
 import com.sirius.siriussummago.ui.theme.SummaGoTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,30 +17,36 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             SummaGoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                NavHost(
+                    navController = navController,
+                    startDestination = MainActivityScreens.SignIn.name
+                ) {
+                    composable(MainActivityScreens.SignIn.name) {
+                        SignInScreen(navController)
+                    }
+
+                    composable(MainActivityScreens.SignUp.name) {
+                        SignUpScreen(navController)
+                    }
+
+                    composable(MainActivityScreens.SignUp2.name) {
+                        SignUp2Screen(navController)
+                    }
+
+                    composable(MainActivityScreens.Main.name) {
+
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SummaGoTheme {
-        Greeting("Android")
-    }
+enum class MainActivityScreens(name: String) {
+    SignIn("SignIn"),
+    SignUp("SignUp"),
+    SignUp2("SignUp2"),
+    Main("MainScreen")
 }

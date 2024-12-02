@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">SummaGo</string>
-    <string name="signInLabel">Вход в аккаунт</string>
-    <string name="emailHint">E-mail</string>
-    <string name="passwordHint">Password</string>
+    <string name="sign_in_label">Вход в аккаунт</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Пароль</string>
     <string name="create_new_account_label">Создать новый аккаунт</string>
+    <string name="sign_up_label">Создание аккаунта</string>
+    <string name="confirm_password_hint">Повторите пароль</string>
+    <string name="enter_to_existing_account_label">У меня уже есть аккаунт</string>
+    <string name="name_hint">Имя</string>
+    <string name="role_hint">Роль</string>
+    <string name="work_place_hint">Место учёбы/работы</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>
