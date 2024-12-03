@@ -11,4 +11,6 @@
     <string name="role_hint">Роль</string>
     <string name="work_place_hint">Место учёбы/работы</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="lection">Лекция</string>
+    <string name="seminar">Семинар</string>
 </resources>

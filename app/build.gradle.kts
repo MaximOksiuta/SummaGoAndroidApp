@@ -16,6 +16,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        manifestPlaceholders["YANDEX_CLIENT_ID"] = "10ecb77b536d431d81d70f5195dd6b25"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -65,7 +67,13 @@ dependencies {
     // Google fonts
     implementation(libs.androidx.ui.text.google.fonts)
 
-
     // Constraint layout
     implementation(libs.androidx.constraintlayout.compose)
+
+    // Compose navigation
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.authsdk)
+
+    implementation(libs.androidx.core.splashscreen)
 }

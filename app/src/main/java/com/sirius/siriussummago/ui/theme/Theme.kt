@@ -343,18 +343,8 @@ val extendedDarkHighContrast = ExtendedColorScheme(
 )
 
 val LocalExColorScheme = staticCompositionLocalOf { ExtendedColorScheme() }
-val LocalExMediumContrastColorScheme = staticCompositionLocalOf {
-    ExtendedColorScheme(
-        accent = extendedLightMediumContrast.accent,
-        orangeAccent = extendedLightMediumContrast.orangeAccent
-    )
-}
-val LocalExHighContrastColorScheme = staticCompositionLocalOf {
-    ExtendedColorScheme(
-        accent = extendedLightHighContrast.accent,
-        orangeAccent = extendedLightHighContrast.orangeAccent
-    )
-}
+val LocalExMediumContrastColorScheme = staticCompositionLocalOf { ExtendedColorScheme() }
+val LocalExHighContrastColorScheme = staticCompositionLocalOf { ExtendedColorScheme() }
 
 @Immutable
 data class ColorFamily(
