@@ -52,6 +52,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sirius.siriussummago.R
 import com.sirius.siriussummago.dataModels.BaseSummaryInfo
 import com.sirius.siriussummago.dataModels.ThemeType
+import com.sirius.siriussummago.ui.TopBar
 import com.sirius.siriussummago.ui.theme.LocalDim
 import com.sirius.siriussummago.ui.theme.LocalExColorScheme
 import com.sirius.siriussummago.ui.theme.SummaGoTheme
@@ -85,46 +86,14 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
             Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
 
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) { // Top bar with app name and profile button
-                Spacer(modifier = Modifier.weight(1f))
+            TopBar(textRes = R.string.app_name, iconRes = R.drawable.ic_person, onClick = {
 
-                // App name
-                Text(
-                    text = stringResource(R.string.app_name),
-                    style = typography.titleLarge,
-                    color = colorScheme.onBackground
-                )
-                Row(
-                    modifier = Modifier.weight(1f),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    // Profile button
-                    Icon(
-                        painterResource(R.drawable.ic_person),
-                        contentDescription = "User profile button",
-                        tint = colorScheme.onBackground,
-                        modifier = Modifier.size(32.dp)
-                    )
-
-                    Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
-                }
-            }
-            val scrollState = rememberScrollState()
-            thread {
-                runBlocking {
-                    scrollState.scrollBy(0.5f)
-                }
-            }
+            })
             Box { // Scroll shading box
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .verticalScroll(scrollState)
+                        .verticalScroll(rememberScrollState())
                 ) { // scrollable column
                     Spacer(modifier = Modifier.height(LocalDim.current.spaceExtraLarge))
                     Column(
@@ -182,7 +151,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                                                     CircleShape
                                                 )
                                                 .height(16.dp)
-                                                .padding(horizontal = 4.dp)
+                                                .padding(horizontal = 6.dp)
                                         )
                                         Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
                                     }
@@ -373,31 +342,38 @@ fun FeatureButton(
 private fun MainScreenPreview() {
     SummaGoTheme {
         MainScreen(dataProvider = object : MainScreenDataProvider {
-            override fun getLastSummaries(): Flow<List<BaseSummaryInfo>> {
-                return flow {
-                    emit(
-                        listOf<BaseSummaryInfo>(
-                            BaseSummaryInfo(
-                                id = 0,
-                                name = "Теория множеств",
-                                disciplineName = "Мат. анализ",
-                                type = ThemeType.Lecture
-                            ),
-                            BaseSummaryInfo(
-                                id = 0,
-                                name = "Расстояние Лихтенштейна",
-                                disciplineName = "Алг. и структуры данных",
-                                type = ThemeType.Seminar
-                            ),
-                            BaseSummaryInfo(
-                                id = 0,
-                                name = "Октябрьская революция",
-                                disciplineName = "История",
-                                type = ThemeType.Lecture
-                            )
+            override fun getLastSummaries(): Flow<List<BaseSummaryInfo>> = flow {
+                emit(
+                    listOf<BaseSummaryInfo>(
+                        BaseSummaryInfo(
+                            id = 0,
+                            name = "Теория множеств",
+                            disciplineName = "Мат. анализ",
+                            themeName = "Theme 1",
+                            type = ThemeType.Lecture,
+                            createTime = 1728248400,
+                            updateTime = 1728248400
+                        ),
+                        BaseSummaryInfo(
+                            id = 0,
+                            name = "Расстояние Лихтенштейна",
+                            disciplineName = "Алг. и структуры данных",
+                            themeName = "Theme 1",
+                            type = ThemeType.Seminar,
+                            createTime = 1728248400,
+                            updateTime = 1728248400
+                        ),
+                        BaseSummaryInfo(
+                            id = 0,
+                            name = "Октябрьская революция",
+                            disciplineName = "История",
+                            themeName = "Theme 1",
+                            type = ThemeType.Lecture,
+                            createTime = 1728248400,
+                            updateTime = 1728248400
                         )
                     )
-                }
+                )
             }
 
             override fun getAdvice(): Flow<AnnotatedString> = flow {

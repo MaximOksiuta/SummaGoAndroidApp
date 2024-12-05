@@ -11,6 +11,15 @@
     <string name="role_hint">Роль</string>
     <string name="work_place_hint">Место учёбы/работы</string>
     <string name="title_activity_test">TestActivity</string>
-    <string name="lection">Лекция</string>
-    <string name="seminar">Семинар</string>
+    <string name="lection">Материал</string>
+    <string name="seminar">Практика</string>
+    <string name="my_summaries_label">Мои конспекты</string>
+    <string name="search_summary_hint">Введите название</string>
+    <string name="filters_label">Фильтры</string>
+    <string name="subjects_filter_label">Дисциплины</string>
+    <string name="type_label">Тип конспекта</string>
+    <string name="themes_filter_label">Темы</string>
+    <string name="subject_label">Дисциплина</string>
+    <string name="theme_label">Тема</string>
+    <string name="date_label">Дата</string>
 </resources>

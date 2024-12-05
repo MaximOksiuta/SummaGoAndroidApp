@@ -31,8 +31,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.ai.client.generativeai.type.content
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.screens.ui.theme.SummaGoTheme
 import com.sirius.siriussummago.ui.theme.LocalDim
+import com.sirius.siriussummago.ui.theme.SummaGoTheme
 import com.sirius.siriussummago.ui.theme.shapes
 
 @Composable
