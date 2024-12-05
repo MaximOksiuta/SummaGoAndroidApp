@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.ui
+package com.sirius.siriussummago.presentation.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -20,9 +20,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.noRippleClickable
-import com.sirius.siriussummago.ui.theme.LocalDim
-import com.sirius.siriussummago.ui.theme.LocalExColorScheme
+import com.sirius.siriussummago.presentation.noRippleClickable
+import com.sirius.siriussummago.presentation.ui.theme.LocalDim
+import com.sirius.siriussummago.presentation.ui.theme.LocalExColorScheme
 
 @Composable
 fun NextButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
@@ -104,7 +104,7 @@ fun TopBar(
                         .noRippleClickable { onClick?.invoke() }
                 )
 
-                Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
             }
         } else {
             Spacer(modifier = Modifier.weight(1f))

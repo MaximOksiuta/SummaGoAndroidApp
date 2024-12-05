@@ -1,10 +1,9 @@
-package com.sirius.siriussummago.screens
+package com.sirius.siriussummago.presentation.screens
 
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,13 +35,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -50,17 +47,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.dataModels.BaseSummaryInfo
-import com.sirius.siriussummago.dataModels.ThemeType
-import com.sirius.siriussummago.ui.TopBar
-import com.sirius.siriussummago.ui.theme.LocalDim
-import com.sirius.siriussummago.ui.theme.LocalExColorScheme
-import com.sirius.siriussummago.ui.theme.SummaGoTheme
-import com.sirius.siriussummago.ui.theme.backgroundDark
+import com.sirius.siriussummago.presentation.dataModels.BaseSummaryInfo
+import com.sirius.siriussummago.presentation.dataModels.ThemeType
+import com.sirius.siriussummago.presentation.ui.TopBar
+import com.sirius.siriussummago.presentation.ui.theme.LocalDim
+import com.sirius.siriussummago.presentation.ui.theme.LocalExColorScheme
+import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
-import kotlin.concurrent.thread
 
 
 interface MainScreenDataProvider {
@@ -83,7 +77,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                 .padding(horizontal = LocalDim.current.spaceMedium)
 
         ) {
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
 
             TopBar(textRes = R.string.app_name, iconRes = R.drawable.ic_person, onClick = {
@@ -95,7 +89,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                         .fillMaxWidth()
                         .verticalScroll(rememberScrollState())
                 ) { // scrollable column
-                    Spacer(modifier = Modifier.height(LocalDim.current.spaceExtraLarge))
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraLarge))
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -110,7 +104,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                             style = typography.bodyLarge,
                             color = LocalExColorScheme.current.accent.onColor
                         )
-                        Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                         Box { // dividing box
                             Row(modifier = Modifier.fillMaxWidth()) { // summaries info
 
@@ -126,10 +120,10 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                                             overflow = TextOverflow.Ellipsis,
                                             modifier = Modifier.height(16.dp)
                                         )
-                                        Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                                     }
                                 }
-                                Spacer(modifier = Modifier.width(LocalDim.current.spaceExtraSmall))
+                                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceExtraSmall))
 
                                 // types
                                 Column(
@@ -153,7 +147,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                                                 .height(16.dp)
                                                 .padding(horizontal = 6.dp)
                                         )
-                                        Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                                     }
                                 }
                             }
@@ -163,7 +157,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                                     if (summary_id != (lastSummaries.value.size - 1)) {
                                         Box(
                                             contentAlignment = Alignment.Center,
-                                            modifier = Modifier.height(LocalDim.current.spaceMedium)
+                                            modifier = Modifier.Companion.height(LocalDim.current.spaceMedium)
                                         ) {
                                             HorizontalDivider(
                                                 thickness = 1.dp,
@@ -176,7 +170,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                         }
                     }
                     // Feature buttons
-                    Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                     Row(horizontalArrangement = Arrangement.spacedBy(LocalDim.current.spaceMedium)) {
                         FeatureButton(
                             modifier = Modifier.weight(1f),
@@ -196,7 +190,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
 
                         }
                     }
-                    Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                     Row(horizontalArrangement = Arrangement.spacedBy(LocalDim.current.spaceMedium)) {
                         FeatureButton(
                             modifier = Modifier.weight(1f),
@@ -217,7 +211,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
 
                     Card(
                         modifier = Modifier,
@@ -236,7 +230,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                                 style = typography.titleMedium,
                                 color = colorScheme.onSecondaryContainer
                             )
-                            Spacer(modifier = Modifier.height(LocalDim.current.spaceExtraSmall))
+                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraSmall))
                             Text(
                                 text = currentAdvice.value,
                                 style = typography.bodyMedium,
@@ -252,7 +246,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
 
                 // Shader
                 Box(
-                    modifier = Modifier
+                    modifier = Modifier.Companion
                         .height(LocalDim.current.spaceExtraLarge)
                         .fillMaxWidth()
                         .background(

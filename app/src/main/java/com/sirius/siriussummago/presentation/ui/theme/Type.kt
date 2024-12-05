@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.ui.theme
+package com.sirius.siriussummago.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily

@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.screens.auth
+package com.sirius.siriussummago.presentation.screens.auth
 
 import android.content.res.Configuration
 import android.util.Log
@@ -40,12 +40,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.sirius.siriussummago.MainActivityScreens
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.noRippleClickable
-import com.sirius.siriussummago.ui.NextButton
-import com.sirius.siriussummago.ui.theme.LocalDim
-import com.sirius.siriussummago.ui.theme.SummaGoTheme
+import com.sirius.siriussummago.presentation.MainActivityScreens
+import com.sirius.siriussummago.presentation.noRippleClickable
+import com.sirius.siriussummago.presentation.ui.NextButton
+import com.sirius.siriussummago.presentation.ui.theme.LocalDim
+import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 
 data class SignUp2ScreenState(
     val name: MutableState<String> = mutableStateOf(""),
@@ -69,7 +69,7 @@ fun SignUp2Screen(
     ) {
 
         // Logo and app name
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
         Image(
             painterResource(R.drawable.logo),
             contentDescription = "App logo",
@@ -83,7 +83,7 @@ fun SignUp2Screen(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
         // Sign up label
         Text(
@@ -92,7 +92,7 @@ fun SignUp2Screen(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
         // Email field
         OutlinedTextField(
@@ -123,7 +123,7 @@ fun SignUp2Screen(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
-        Spacer(Modifier.height(LocalDim.current.spaceMedium))
+        Spacer(Modifier.Companion.height(LocalDim.current.spaceMedium))
 
         // Password field
         OutlinedTextField(
@@ -154,7 +154,7 @@ fun SignUp2Screen(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
 
         Box {
             OutlinedTextField(
@@ -228,7 +228,7 @@ fun SignUp2Screen(
             }
         }
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceExtraSmall))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraSmall))
         // SignIn button
         Text(
             stringResource(R.string.enter_to_existing_account_label),

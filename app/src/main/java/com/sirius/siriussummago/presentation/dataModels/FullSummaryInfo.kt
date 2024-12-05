@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.dataModels
+package com.sirius.siriussummago.presentation.dataModels
 
 data class FullSummaryInfo(
     val id: Int,

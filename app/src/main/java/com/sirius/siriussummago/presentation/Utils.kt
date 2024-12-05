@@ -1,14 +1,12 @@
-package com.sirius.siriussummago
+package com.sirius.siriussummago.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import okhttp3.internal.UTC
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 fun Modifier.noRippleClickable(onClick: () -> Unit) = composed {
     Modifier.clickable(remember { MutableInteractionSource() }, null) {

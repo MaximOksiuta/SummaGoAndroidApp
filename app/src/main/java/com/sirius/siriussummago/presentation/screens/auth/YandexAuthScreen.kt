@@ -1,11 +1,9 @@
-package com.sirius.siriussummago.screens.auth
+package com.sirius.siriussummago.presentation.screens.auth
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,11 +27,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.ai.client.generativeai.type.content
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.ui.theme.LocalDim
-import com.sirius.siriussummago.ui.theme.SummaGoTheme
-import com.sirius.siriussummago.ui.theme.shapes
+import com.sirius.siriussummago.presentation.ui.theme.LocalDim
+import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 
 @Composable
 fun YandexAuthScreen(authRequest: () -> Unit) {
@@ -46,7 +42,7 @@ fun YandexAuthScreen(authRequest: () -> Unit) {
     ) {
 
         // Logo and app name
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
         Image(
             painterResource(R.drawable.logo),
             contentDescription = "App logo",
@@ -60,7 +56,7 @@ fun YandexAuthScreen(authRequest: () -> Unit) {
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
         Column(modifier = Modifier.width(IntrinsicSize.Min)) {
             OutlinedButton(

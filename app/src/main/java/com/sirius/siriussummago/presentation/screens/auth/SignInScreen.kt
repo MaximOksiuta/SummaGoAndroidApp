@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.screens.auth
+package com.sirius.siriussummago.presentation.screens.auth
 
 
 import android.content.res.Configuration
@@ -33,11 +33,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.sirius.siriussummago.MainActivityScreens
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.ui.NextButton
-import com.sirius.siriussummago.ui.theme.LocalDim
-import com.sirius.siriussummago.ui.theme.SummaGoTheme
+import com.sirius.siriussummago.presentation.MainActivityScreens
+import com.sirius.siriussummago.presentation.ui.NextButton
+import com.sirius.siriussummago.presentation.ui.theme.LocalDim
+import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 
 data class SignInScreenState(
     val email: MutableState<String> = mutableStateOf(""),
@@ -58,7 +58,7 @@ fun SignInScreen(
     ) {
 
         // Logo and app name
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
         Image(
             painterResource(R.drawable.logo),
             contentDescription = "App logo",
@@ -72,7 +72,7 @@ fun SignInScreen(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
         // Sign in label
         Text(
@@ -81,7 +81,7 @@ fun SignInScreen(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
         // Email field
         OutlinedTextField(
@@ -112,7 +112,7 @@ fun SignInScreen(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
-        Spacer(Modifier.height(LocalDim.current.spaceMedium))
+        Spacer(Modifier.Companion.height(LocalDim.current.spaceMedium))
 
         // Password field
         OutlinedTextField(
@@ -143,7 +143,7 @@ fun SignInScreen(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
-        Spacer(modifier = Modifier.height(LocalDim.current.spaceExtraSmall))
+        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraSmall))
         // Create new account button
         Text(
             stringResource(R.string.create_new_account_label),

@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.ui.theme
+package com.sirius.siriussummago.presentation.ui.theme
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp

@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.ui.theme
+package com.sirius.siriussummago.presentation.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

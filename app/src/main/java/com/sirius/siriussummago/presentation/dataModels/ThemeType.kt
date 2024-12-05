@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.dataModels
+package com.sirius.siriussummago.presentation.dataModels
 
 import androidx.annotation.StringRes
 import com.sirius.siriussummago.R

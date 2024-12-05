@@ -1,4 +1,4 @@
-package com.sirius.siriussummago
+package com.sirius.siriussummago.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,10 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sirius.siriussummago.screens.auth.SignInScreen
-import com.sirius.siriussummago.screens.auth.SignUp2Screen
-import com.sirius.siriussummago.screens.auth.SignUpScreen
-import com.sirius.siriussummago.ui.theme.SummaGoTheme
+import com.sirius.siriussummago.presentation.screens.auth.SignInScreen
+import com.sirius.siriussummago.presentation.screens.auth.SignUp2Screen
+import com.sirius.siriussummago.presentation.screens.auth.SignUpScreen
+import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

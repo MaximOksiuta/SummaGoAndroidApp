@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.ui.theme
+package com.sirius.siriussummago.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF006973)

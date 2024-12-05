@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.screens
+package com.sirius.siriussummago.presentation.screens
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
@@ -48,16 +48,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.dataModels.BaseSummaryInfo
-import com.sirius.siriussummago.dataModels.SummarySubject
-import com.sirius.siriussummago.dataModels.SummaryTheme
-import com.sirius.siriussummago.dataModels.ThemeType
-import com.sirius.siriussummago.getDateTime
-import com.sirius.siriussummago.noRippleClickable
-import com.sirius.siriussummago.ui.TopBar
-import com.sirius.siriussummago.ui.theme.LocalDim
-import com.sirius.siriussummago.ui.theme.LocalExColorScheme
-import com.sirius.siriussummago.ui.theme.SummaGoTheme
+import com.sirius.siriussummago.presentation.dataModels.BaseSummaryInfo
+import com.sirius.siriussummago.presentation.dataModels.SummarySubject
+import com.sirius.siriussummago.presentation.dataModels.SummaryTheme
+import com.sirius.siriussummago.presentation.dataModels.ThemeType
+import com.sirius.siriussummago.presentation.getDateTime
+import com.sirius.siriussummago.presentation.noRippleClickable
+import com.sirius.siriussummago.presentation.ui.TopBar
+import com.sirius.siriussummago.presentation.ui.theme.LocalDim
+import com.sirius.siriussummago.presentation.ui.theme.LocalExColorScheme
+import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -98,14 +98,14 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                 .padding(start = LocalDim.current.spaceMedium)
 
         ) {
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
             TopBar(
                 modifier = Modifier.padding(horizontal = LocalDim.current.spaceMedium),
                 textRes = R.string.my_summaries_label
             )
 
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
 
             BasicTextField(
@@ -143,7 +143,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                     }
                 }
             )
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
 
             Text(
                 text = stringResource(R.string.filters_label),
@@ -151,7 +151,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                 color = colorScheme.onBackground
             )
 
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceSmall))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceSmall))
 
             // Subjects filter row
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.height(16.dp)) {
@@ -167,7 +167,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         item {
-                            Spacer(modifier = Modifier.width(LocalDim.current.spaceSmall))
+                            Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                         }
                         if (selectedSubjectId.intValue == -1) {
                             itemsIndexed(subjects.value) { index, it ->
@@ -203,12 +203,12 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                             }
                         }
                         item {
-                            Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                            Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
                         }
                     }
 
                     Box(
-                        modifier = Modifier
+                        modifier = Modifier.Companion
                             .width(LocalDim.current.spaceSmall)
                             .fillMaxHeight()
                             .background(
@@ -223,7 +223,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceSmall))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceSmall))
 
 
             // Themes filter row
@@ -250,7 +250,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                         ) {
                             item {
-                                Spacer(modifier = Modifier.width(LocalDim.current.spaceSmall))
+                                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                             }
                             if (selectedThemeId.intValue == -1) {
                                 itemsIndexed(themes.value) { index, it ->
@@ -287,12 +287,12 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                                 }
                             }
                             item {
-                                Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
                             }
                         }
 
                         Box(
-                            modifier = Modifier
+                            modifier = Modifier.Companion
                                 .width(LocalDim.current.spaceSmall)
                                 .fillMaxHeight()
                                 .background(
@@ -325,7 +325,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                 Box {
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         item {
-                            Spacer(modifier = Modifier.width(LocalDim.current.spaceSmall))
+                            Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                         }
                         if (selectedType.value == null) {
                             items(
@@ -367,7 +367,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                     }
 
                     Box(
-                        modifier = Modifier
+                        modifier = Modifier.Companion
                             .width(LocalDim.current.spaceSmall)
                             .fillMaxHeight()
                             .background(
@@ -389,17 +389,17 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                         .padding(end = LocalDim.current.spaceMedium)
                 ) { // scrollable column
                     item {
-                        Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                     }
                     items(summaries.value) {
                         SummaryInfoCard(modifier = Modifier.fillMaxWidth(), baseSummaryInfo = it)
-                        Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                     }
                 }
 
                 // Shader
                 Box(
-                    modifier = Modifier
+                    modifier = Modifier.Companion
                         .height(LocalDim.current.spaceMedium)
                         .fillMaxWidth()
                         .background(
@@ -469,7 +469,7 @@ fun SummaryInfoCard(modifier: Modifier = Modifier, baseSummaryInfo: BaseSummaryI
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.width(LocalDim.current.spaceLarge))
+                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceLarge))
                 Text(
                     text = stringResource(R.string.subject_label) + ": " + baseSummaryInfo.disciplineName,
                     style = typography.bodyMedium,
@@ -477,7 +477,7 @@ fun SummaryInfoCard(modifier: Modifier = Modifier, baseSummaryInfo: BaseSummaryI
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.width(LocalDim.current.spaceSmall))
+                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                 Text(
                     text = stringResource(R.string.theme_label) + ": " + baseSummaryInfo.themeName,
                     style = typography.bodyMedium,
@@ -485,7 +485,7 @@ fun SummaryInfoCard(modifier: Modifier = Modifier, baseSummaryInfo: BaseSummaryI
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.width(LocalDim.current.spaceSmall))
+                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                 Text(
                     text = stringResource(R.string.date_label) + ": " + getDateTime(baseSummaryInfo.createTime),
                     style = typography.bodyMedium,
@@ -494,7 +494,7 @@ fun SummaryInfoCard(modifier: Modifier = Modifier, baseSummaryInfo: BaseSummaryI
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-            Spacer(modifier = Modifier.width(LocalDim.current.spaceSmall))
+            Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
 
             TextBubble(
                 modifier = Modifier.height(20.dp),

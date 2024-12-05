@@ -1,4 +1,4 @@
-package com.sirius.siriussummago.screens
+package com.sirius.siriussummago.presentation.screens
 
 import android.content.res.Configuration
 import android.media.MediaPlayer
@@ -48,18 +48,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.dataModels.FullSummaryInfo
-import com.sirius.siriussummago.dataModels.MaterialSummaryStatus
-import com.sirius.siriussummago.dataModels.SummaryMaterial
-import com.sirius.siriussummago.dataModels.SummarySubject
-import com.sirius.siriussummago.dataModels.SummaryTheme
-import com.sirius.siriussummago.dataModels.ThemeType
-import com.sirius.siriussummago.getDateTime
-import com.sirius.siriussummago.getTime
-import com.sirius.siriussummago.ui.TopBar
-import com.sirius.siriussummago.ui.theme.LocalDim
-import com.sirius.siriussummago.ui.theme.LocalExColorScheme
-import com.sirius.siriussummago.ui.theme.SummaGoTheme
+import com.sirius.siriussummago.presentation.dataModels.FullSummaryInfo
+import com.sirius.siriussummago.presentation.dataModels.MaterialSummaryStatus
+import com.sirius.siriussummago.presentation.dataModels.SummaryMaterial
+import com.sirius.siriussummago.presentation.dataModels.SummarySubject
+import com.sirius.siriussummago.presentation.dataModels.SummaryTheme
+import com.sirius.siriussummago.presentation.dataModels.ThemeType
+import com.sirius.siriussummago.presentation.getDateTime
+import com.sirius.siriussummago.presentation.getTime
+import com.sirius.siriussummago.presentation.ui.TopBar
+import com.sirius.siriussummago.presentation.ui.theme.LocalDim
+import com.sirius.siriussummago.presentation.ui.theme.LocalExColorScheme
+import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 
 @Composable
 fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
@@ -73,10 +73,13 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                     .background(colorScheme.background)
                     .padding(horizontal = LocalDim.current.spaceMedium)
             ) {
-                Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+                Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
-                TopBar(text = summaryDetails.value!!.name, iconRes = R.drawable.ic_menu, onClick = {})
-                Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+                TopBar(
+                    text = summaryDetails.value!!.name,
+                    iconRes = R.drawable.ic_menu,
+                    onClick = {})
+                Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
                 if (summaryDetails.value!!.summaryReady) {
                     Button(
@@ -98,7 +101,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                             textAlign = TextAlign.Center
                         )
                     }
-                    Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Button(
                             modifier = Modifier
@@ -119,7 +122,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                                 textAlign = TextAlign.Center
                             )
                         }
-                        Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                        Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
                         Button(
                             modifier = Modifier
                                 .weight(1f)
@@ -170,7 +173,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                             .fillMaxWidth()
                     ) { // scrollable column
                         item {
-                            Spacer(modifier = Modifier.height(LocalDim.current.spaceLarge))
+                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
 
                             Text(
                                 text = stringResource(R.string.subject_label) + ": " + summaryDetails.value!!.subject.name,
@@ -179,7 +182,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
-                            Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                            Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
                             Text(
                                 text = stringResource(R.string.theme_label) + ": " + summaryDetails.value!!.theme.name,
                                 style = typography.bodyLarge,
@@ -187,7 +190,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
-                            Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                            Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
                             Text(
                                 text = stringResource(R.string.date_label) + ": " + getDateTime(
                                     summaryDetails.value!!.createTime
@@ -198,7 +201,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                                 overflow = TextOverflow.Ellipsis,
                             )
 
-                            Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                            Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
                             Text(
                                 text = stringResource(R.string.materials) + ":",
                                 style = typography.bodyLarge,
@@ -206,20 +209,20 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
-                            Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                         }
                         items(summaryDetails.value!!.materials) {
                             SummaryMaterialCard(it)
-                            Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                         }
                         item{
-                            Spacer(modifier = Modifier.height(LocalDim.current.spaceExtraLarge))
+                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraLarge))
                         }
                     }
 
                     // Shader
                     Box(
-                        modifier = Modifier
+                        modifier = Modifier.Companion
                             .height(LocalDim.current.spaceLarge)
                             .fillMaxWidth()
                             .background(
@@ -261,7 +264,7 @@ fun SummaryMaterialCard(material: SummaryMaterial, mediaPlayer: MediaPlayer? = n
         when (material) {
             is SummaryMaterial.Audio -> {
                 Column(
-                    modifier = Modifier
+                    modifier = Modifier.Companion
                         .padding(LocalDim.current.spaceMedium)
                         .fillMaxWidth()
                 ) {
@@ -273,7 +276,7 @@ fun SummaryMaterialCard(material: SummaryMaterial, mediaPlayer: MediaPlayer? = n
                         overflow = TextOverflow.Ellipsis,
                     )
 
-                    Spacer(modifier = Modifier.height(LocalDim.current.spaceSmall))
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceSmall))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painterResource(R.drawable.ic_play_pause),
@@ -281,7 +284,7 @@ fun SummaryMaterialCard(material: SummaryMaterial, mediaPlayer: MediaPlayer? = n
                             tint = colorScheme.onSecondary,
                             modifier = Modifier.size(15.dp)
                         )
-                        Spacer(modifier = Modifier.width(LocalDim.current.spaceMedium))
+                        Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceMedium))
                         var sliderPosition = remember { mutableFloatStateOf(0f) }
                         Slider(
                             value = sliderPosition.floatValue,
@@ -298,7 +301,7 @@ fun SummaryMaterialCard(material: SummaryMaterial, mediaPlayer: MediaPlayer? = n
 
             is SummaryMaterial.Text -> {
                 Column(
-                    modifier = Modifier
+                    modifier = Modifier.Companion
                         .padding(LocalDim.current.spaceMedium)
                         .fillMaxWidth()
                 ) {
@@ -310,7 +313,7 @@ fun SummaryMaterialCard(material: SummaryMaterial, mediaPlayer: MediaPlayer? = n
                         overflow = TextOverflow.Ellipsis,
                     )
 
-                    Spacer(modifier = Modifier.height(LocalDim.current.spaceSmall))
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceSmall))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painterResource(R.drawable.ic_document),
@@ -318,7 +321,7 @@ fun SummaryMaterialCard(material: SummaryMaterial, mediaPlayer: MediaPlayer? = n
                             tint = colorScheme.onSecondary,
                             modifier = Modifier.size(24.dp)
                         )
-                        Spacer(modifier = Modifier.width(LocalDim.current.spaceSmall))
+                        Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                         Text(
                             text = material.name,
                             style = typography.bodyMedium,
@@ -427,7 +430,7 @@ private fun SummaryMaterialCardPreview() {
                     useInGeneralSummary = true
                 )
             )
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
             SummaryMaterialCard(
                 SummaryMaterial.Text(
                     name = "sets.md",
@@ -438,7 +441,7 @@ private fun SummaryMaterialCardPreview() {
                 ),
 //                mediaPlayer = mediaPlayer
             )
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
             SummaryMaterialCard(
                 SummaryMaterial.Image(
                     file = "https://i.pinimg.com/originals/8e/43/05/8e4305e5ca2524e022a75c5fdf0f1803.jpg",
@@ -448,7 +451,7 @@ private fun SummaryMaterialCardPreview() {
                 ),
 //                mediaPlayer = mediaPlayer
             )
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
             SummaryMaterialCard(
                 SummaryMaterial.Video(
                     duration = 5127,
@@ -459,7 +462,7 @@ private fun SummaryMaterialCardPreview() {
                 ),
 //                mediaPlayer = mediaPlayer
             )
-            Spacer(modifier = Modifier.height(LocalDim.current.spaceMedium))
+            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
         }
     }
 }
