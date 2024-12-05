@@ -60,6 +60,21 @@ fun TopBar(
     @DrawableRes iconRes: Int? = null,
     onClick: (() -> Unit)? = null
 ) {
+    TopBar(
+        modifier = modifier,
+        text = stringResource(textRes),
+        iconRes = iconRes,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun TopBar(
+    modifier: Modifier = Modifier,
+    text: String,
+    @DrawableRes iconRes: Int? = null,
+    onClick: (() -> Unit)? = null
+) {
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -68,7 +83,7 @@ fun TopBar(
 
         // screen title
         Text(
-            text = stringResource(textRes),
+            text = text,
             style = typography.titleLarge,
             color = colorScheme.onBackground
         )

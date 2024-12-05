@@ -46,6 +46,7 @@ android {
 
 dependencies {
 
+    // Base libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -73,7 +74,14 @@ dependencies {
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
 
+    // Yandex auth SDK
     implementation(libs.authsdk)
 
+    // Splash screen API
     implementation(libs.androidx.core.splashscreen)
+
+
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }

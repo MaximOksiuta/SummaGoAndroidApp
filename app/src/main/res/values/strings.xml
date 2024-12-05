@@ -22,4 +22,13 @@
     <string name="subject_label">Дисциплина</string>
     <string name="theme_label">Тема</string>
     <string name="date_label">Дата</string>
+    <string name="summary">Конспект</string>
+    <string name="search_in_summary">Поиск по конспекту</string>
+    <string name="gen_questions">Генерация вопросов</string>
+    <string name="gen_summary">SummaGo!</string>
+    <string name="materials">Материалы</string>
+    <string name="audio_file">Аудиофайл</string>
+    <string name="document_label">Документ</string>
+    <string name="image_label">Изображение</string>
+    <string name="video_label">Видео</string>
 </resources>

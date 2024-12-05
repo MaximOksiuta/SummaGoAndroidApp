@@ -1,7 +1,6 @@
-package com.sirius.siriussummago
+package com.sirius.siriussummago.screens
 
 import android.content.res.Configuration
-import android.icu.text.DateFormat
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,10 +47,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sirius.siriussummago.R
 import com.sirius.siriussummago.dataModels.BaseSummaryInfo
 import com.sirius.siriussummago.dataModels.SummarySubject
 import com.sirius.siriussummago.dataModels.SummaryTheme
 import com.sirius.siriussummago.dataModels.ThemeType
+import com.sirius.siriussummago.getDateTime
+import com.sirius.siriussummago.noRippleClickable
 import com.sirius.siriussummago.ui.TopBar
 import com.sirius.siriussummago.ui.theme.LocalDim
 import com.sirius.siriussummago.ui.theme.LocalExColorScheme
