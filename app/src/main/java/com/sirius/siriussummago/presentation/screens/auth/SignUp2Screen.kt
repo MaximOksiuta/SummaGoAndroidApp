@@ -46,20 +46,16 @@ import com.sirius.siriussummago.presentation.noRippleClickable
 import com.sirius.siriussummago.presentation.ui.NextButton
 import com.sirius.siriussummago.presentation.ui.theme.LocalDim
 import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
-
-data class SignUp2ScreenState(
-    val name: MutableState<String> = mutableStateOf(""),
-    val organization: MutableState<String> = mutableStateOf(""),
-    val passwordConfirm: MutableState<String> = mutableStateOf(""),
-    val expanded: MutableState<Boolean> = mutableStateOf(false),
-)
+import com.sirius.siriussummago.presentation.viewModel.SharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUp2Screen(
-    navController: NavController,
-    screenState: SignUp2ScreenState = remember { SignUp2ScreenState() },
+    sharedViewModel: SharedViewModel?
 ) {
+    val name = sharedViewModel?.signUpName ?: remember { mutableStateOf("") }
+    val organization = sharedViewModel?.signUpOrganization ?: remember { mutableStateOf("") }
+    val role = sharedViewModel?.signUpRole ?: remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -96,8 +92,8 @@ fun SignUp2Screen(
 
         // Email field
         OutlinedTextField(
-            value = screenState.name.value,
-            onValueChange = { screenState.name.value = it },
+            value = name.value,
+            onValueChange = { name.value = it },
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = {
@@ -127,8 +123,8 @@ fun SignUp2Screen(
 
         // Password field
         OutlinedTextField(
-            value = screenState.organization.value,
-            onValueChange = { screenState.organization.value = it },
+            value = organization.value,
+            onValueChange = { organization.value = it },
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = {
@@ -156,89 +152,35 @@ fun SignUp2Screen(
 
         Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
 
-        Box {
-            OutlinedTextField(
-                value = screenState.organization.value,
-                onValueChange = {},
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        Log.d("SignUp2Screen", "Role field clicked")
-                        screenState.expanded.value = !screenState.expanded.value
-                    }
-                    .onFocusEvent {
-                        if (it.isFocused) {
-                            screenState.expanded.value = true
-                        }
-                    },
-                readOnly = true,
-                leadingIcon = {
-                    Icon(
-                        painterResource(R.drawable.ic_role),
-                        contentDescription = "Role icon",
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        painterResource(R.drawable.ic_arrow_drop_down),
-                        contentDescription = "Drop down arrow",
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                        modifier = Modifier
-                            .rotate(
-                                animateFloatAsState(
-                                    if (screenState.expanded.value) 180f else 0f,
-                                    label = ""
-                                ).value
-                            )
-                            .noRippleClickable {
-                                screenState.expanded.value = !screenState.expanded.value
-                            }
-                    )
-                },
-                placeholder = {
-                    Text(
-                        text = stringResource(R.string.role_hint),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                },
-                textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onPrimaryContainer),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                    focusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                    errorBorderColor = MaterialTheme.colorScheme.error
-                ),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
-            )
-
-            DropdownMenu(
-                expanded = screenState.expanded.value,
-                onDismissRequest = { screenState.expanded.value = false }
-            ) {
-                repeat(3) {
-                    DropdownMenuItem(
-                        onClick = { screenState.expanded.value = false },
-                        text = {
-                            Text(text = "Teacher")
-                        },
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraSmall))
-        // SignIn button
-        Text(
-            stringResource(R.string.enter_to_existing_account_label),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground,
+        OutlinedTextField(
+            value = role.value,
+            onValueChange = {
+                role.value = it
+            },
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    navController.navigate(MainActivityScreens.SignIn.name)
-                }
+                .fillMaxWidth(),
+            leadingIcon = {
+                Icon(
+                    painterResource(R.drawable.ic_role),
+                    contentDescription = "Role icon",
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.role_hint),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            },
+            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onPrimaryContainer),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                focusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                errorBorderColor = MaterialTheme.colorScheme.error
+            ),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -247,7 +189,7 @@ fun SignUp2Screen(
             NextButton(
                 modifier = Modifier.offset(x = LocalDim.current.spaceLarge),
                 onClick = {
-                    navController.navigate(MainActivityScreens.Main.name)
+                    sharedViewModel?.signUp(name = name.value, organization = organization.value, role = role.value)
                 }
             )
         }
@@ -265,6 +207,6 @@ fun SignUp2Screen(
 @Composable
 private fun SignUp2ScreenPreview() {
     SummaGoTheme {
-        SignUp2Screen(rememberNavController())
+        SignUp2Screen(null)
     }
 }
