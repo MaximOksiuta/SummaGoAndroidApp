@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 android {
@@ -84,4 +85,38 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+
+    // Adaptive material3
+    implementation(libs.androidx.compose.material3.adaptive)
+    implementation(libs.androidx.compose.material3.adaptive.layout)
+    implementation(libs.androidx.compose.material3.adaptive.navigation)
+
+
+    // CommonMark, for markdown rendering and parsing
+    implementation(libs.commonmark.ext.autolink)
+    implementation(libs.commonmark.ext.footnotes)
+    implementation(libs.commonmark.ext.ins)
+    implementation(libs.commonmark.ext.task.list.items)
+    implementation(libs.commonmark.ext.gfm.strikethrough)
+    implementation(libs.commonmark.ext.gfm.tables)
+    implementation(libs.commonmark.ext.heading.anchor)
+    implementation(libs.commonmark.ext.image.attributes)
+    implementation(libs.commonmark)
+
+    // Material icons
+    implementation(libs.androidx.compose.material.icons)
+
+    // Koin
+    implementation (libs.koin.core)
+    implementation (libs.koin.android)
+    // Koin testing
+    testImplementation (libs.koin.test)
+
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+
 }

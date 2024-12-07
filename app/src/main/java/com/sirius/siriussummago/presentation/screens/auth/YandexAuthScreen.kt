@@ -60,7 +60,9 @@ fun YandexAuthScreen(authRequest: () -> Unit) {
 
         Column(modifier = Modifier.width(IntrinsicSize.Min)) {
             OutlinedButton(
-                onClick = authRequest,
+                onClick = {
+                    authRequest.invoke()
+                },
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(horizontal = 15.dp, vertical = 20.dp),
                 border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.outlineVariant)
