@@ -6,14 +6,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sirius.siriussummago.domain.useCases.AuthUseCase
+import com.sirius.siriussummago.domain.useCases.GetSummariesUseCase
 import com.sirius.siriussummago.presentation.dataModels.AuthState
+import com.sirius.siriussummago.presentation.dataModels.BaseSummaryInfo
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 
-class SharedViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
+class SharedViewModel(
+    private val authUseCase: AuthUseCase,
+    private val getSummariesUseCase: GetSummariesUseCase
+) : ViewModel() {
 
     private val _errors = MutableSharedFlow<Error>()
     val errors: SharedFlow<Error> = _errors
@@ -52,4 +57,14 @@ class SharedViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
     val signUpName: MutableState<String> = mutableStateOf("")
     val signUpOrganization: MutableState<String> = mutableStateOf("")
     val signUpRole: MutableState<String> = mutableStateOf("")
+
+    // Main screen info
+    private val _allSummaries = MutableSharedFlow<List<BaseSummaryInfo>>()
+    val allSummaries: SharedFlow<List<BaseSummaryInfo>> = _allSummaries
+
+    fun updateSummariesList() {
+        viewModelScope.launch {
+            _allSummaries.emit(getSummariesUseCase.getSummaries())
+        }
+    }
 }

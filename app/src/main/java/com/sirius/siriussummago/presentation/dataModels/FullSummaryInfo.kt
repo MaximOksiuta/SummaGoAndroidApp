@@ -1,7 +1,7 @@
 package com.sirius.siriussummago.presentation.dataModels
 
 data class FullSummaryInfo(
-    val id: Int,
+    val id: String,
     val name: String,
     val subject: SummarySubject,
     val theme: SummaryTheme,

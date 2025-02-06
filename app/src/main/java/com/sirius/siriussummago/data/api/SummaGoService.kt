@@ -11,7 +11,6 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.request
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
@@ -25,7 +24,7 @@ object SummaGoService {
     }
 
     suspend fun checkToken(token: String): Boolean {
-        Log.d("SummaGoService", token)
+        Log.d("SummaGoService", "Send request to check token $token")
         val response = client.post(Constants.BASE_API_URL + "/user/check") {
             header("token", token)
         }
@@ -38,7 +37,7 @@ object SummaGoService {
     }
 
     suspend fun signUp(token: String, name: String, organization: String, role: String) {
-        Log.d("SummaGoService", "signUp with $name $organization $role")
+        Log.d("SummaGoService", "signUp with name:$name organization:$organization role:$role")
 
         val response = client.post(Constants.BASE_API_URL + "/user/register") {
             header("token", token)

@@ -3,16 +3,11 @@ package com.sirius.siriussummago.data.repositories
 import android.util.Log
 import com.sirius.siriussummago.data.api.SummaGoService
 import com.sirius.siriussummago.domain.interfaces.NetworkRepository
+import com.sirius.siriussummago.presentation.dataModels.BaseSummaryInfo
 
 class NetworkRepositoryImpl : NetworkRepository {
-    override suspend fun getUserAuthState(token: String): Boolean? {
-
-        return try {
-            SummaGoService.checkToken(token)
-        } catch (e: Exception) {
-            Log.e("NetworkRepository", e.toString())
-            null
-        }
+    override suspend fun getUserAuthState(token: String): Boolean {
+        return return SummaGoService.checkToken(token)
     }
 
     override suspend fun signUp(
@@ -28,5 +23,9 @@ class NetworkRepositoryImpl : NetworkRepository {
             Log.e("NetworkRepository", e.toString())
             return false
         }
+    }
+
+    override suspend fun getSummaries(token: String): List<BaseSummaryInfo> {
+        return emptyList()
     }
 }

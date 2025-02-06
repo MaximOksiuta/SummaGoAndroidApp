@@ -1,3 +1,3 @@
 package com.sirius.siriussummago.presentation.dataModels
 
-data class SummarySubject(val id: Int, val name: String)
+data class SummarySubject(val id: String, val name: String)

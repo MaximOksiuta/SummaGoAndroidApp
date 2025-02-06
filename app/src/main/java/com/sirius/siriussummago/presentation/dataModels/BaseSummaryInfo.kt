@@ -1,7 +1,7 @@
 package com.sirius.siriussummago.presentation.dataModels
 
 data class BaseSummaryInfo(
-    val id: Int,
+    val id: String,
     val name: String,
     val disciplineName: String,
     val themeName: String,

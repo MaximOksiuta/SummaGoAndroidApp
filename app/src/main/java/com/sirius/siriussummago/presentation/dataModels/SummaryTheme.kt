@@ -1,3 +1,3 @@
 package com.sirius.siriussummago.presentation.dataModels
 
-data class SummaryTheme(val id: Int, val name: String)
+data class SummaryTheme(val id: String, val name: String)

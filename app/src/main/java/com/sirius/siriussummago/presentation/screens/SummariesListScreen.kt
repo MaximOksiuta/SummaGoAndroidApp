@@ -31,7 +31,6 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -76,15 +75,15 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
     val themes = remember {
         mutableStateOf(
             listOf(
-                SummaryTheme(id = 0, name = "Theme 1"),
-                SummaryTheme(id = 1, name = "Theme 2"),
-                SummaryTheme(id = 2, name = "Theme 3")
+                SummaryTheme(id = "0", name = "Theme 1"),
+                SummaryTheme(id = "1", name = "Theme 2"),
+                SummaryTheme(id = "2", name = "Theme 3")
             )
         )
     }
 
-    val selectedSubjectId = remember { mutableIntStateOf(-1) }
-    val selectedThemeId = remember { mutableIntStateOf(-1) }
+    val selectedSubjectId = remember { mutableStateOf("") }
+    val selectedThemeId = remember { mutableStateOf("") }
     val selectedType = remember { mutableStateOf<ThemeType?>(null) }
 
     val summaries = dataProvider.getSummaries().collectAsStateWithLifecycle(emptyList())
@@ -169,20 +168,20 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                         item {
                             Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                         }
-                        if (selectedSubjectId.intValue == -1) {
+                        if (selectedSubjectId.value == "") {
                             itemsIndexed(subjects.value) { index, it ->
                                 TextBubble(
                                     text = it.name,
                                     bubbleColor = colorScheme.tertiary,
                                     textColor = colorScheme.onTertiary
                                 ) {
-                                    selectedSubjectId.intValue = it.id
+                                    selectedSubjectId.value = it.id
                                 }
                             }
                         } else {
                             item {
                                 TextBubble(
-                                    text = subjects.value.find { it.id == selectedSubjectId.intValue }?.name
+                                    text = subjects.value.find { it.id == selectedSubjectId.value }?.name
                                         ?: "",
                                     bubbleColor = colorScheme.tertiary,
                                     textColor = colorScheme.onTertiary
@@ -197,7 +196,8 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                                         .rotate(45f)
                                         .size(16.dp)
                                         .noRippleClickable {
-                                            selectedSubjectId.intValue = -1
+                                            selectedSubjectId.value = ""
+                                            selectedThemeId.value = ""
                                         }
                                 )
                             }
@@ -229,7 +229,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
             // Themes filter row
             val themesFilterHeight =
                 animateDpAsState(
-                    if (selectedSubjectId.intValue == -1) 0.dp else 16.dp + LocalDim.current.spaceSmall,
+                    if (selectedSubjectId.value == "") 0.dp else 16.dp + LocalDim.current.spaceSmall,
                     label = ""
                 )
 
@@ -252,20 +252,20 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                             item {
                                 Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceSmall))
                             }
-                            if (selectedThemeId.intValue == -1) {
+                            if (selectedThemeId.value == "") {
                                 itemsIndexed(themes.value) { index, it ->
                                     TextBubble(
                                         text = it.name,
                                         bubbleColor = colorScheme.tertiary,
                                         textColor = colorScheme.onTertiary
                                     ) {
-                                        selectedThemeId.intValue = it.id
+                                        selectedThemeId.value = it.id
                                     }
                                 }
                             } else {
                                 item {
                                     TextBubble(
-                                        text = themes.value.find { it.id == selectedThemeId.intValue }?.name
+                                        text = themes.value.find { it.id == selectedThemeId.value }?.name
                                             ?: "",
                                         bubbleColor = colorScheme.tertiary,
                                         textColor = colorScheme.onTertiary
@@ -280,8 +280,7 @@ fun SummariesListScreen(dataProvider: SummariesListScreenDataProvider) {
                                             .rotate(45f)
                                             .size(16.dp)
                                             .noRippleClickable {
-                                                selectedThemeId.intValue = -1
-                                                selectedThemeId.intValue = -1
+                                                selectedThemeId.value = ""
                                             }
                                     )
                                 }
@@ -519,7 +518,7 @@ fun SummaryInfoCardPreview() {
     SummaGoTheme {
         SummaryInfoCard(
             baseSummaryInfo = BaseSummaryInfo(
-                id = 0,
+                id = "0",
                 name = "Теория множеств",
                 disciplineName = "Мат. анализ",
                 themeName = "Theme 1",
@@ -548,9 +547,9 @@ private fun SummariesListScreenPreview() {
             override fun getSubjects(): Flow<List<SummarySubject>> = flow {
                 emit(
                     listOf(
-                        SummarySubject(id = 0, name = "Мат. анализ"),
-                        SummarySubject(id = 1, name = "Алг. и структуры данных"),
-                        SummarySubject(id = 2, name = "История")
+                        SummarySubject(id = "0", name = "Мат. анализ"),
+                        SummarySubject(id = "1", name = "Алг. и структуры данных"),
+                        SummarySubject(id = "2", name = "История")
                     )
                 )
             }
@@ -559,7 +558,7 @@ private fun SummariesListScreenPreview() {
                 emit(
                     listOf<BaseSummaryInfo>(
                         BaseSummaryInfo(
-                            id = 0,
+                            id = "0",
                             name = "Теория множеств",
                             disciplineName = "Мат. анализ",
                             themeName = "Theme 1",
@@ -568,7 +567,7 @@ private fun SummariesListScreenPreview() {
                             updateTime = 1728248400
                         ),
                         BaseSummaryInfo(
-                            id = 0,
+                            id = "0",
                             name = "Расстояние Лихтенштейна",
                             disciplineName = "Алг. и структуры данных",
                             themeName = "Theme 1",
@@ -577,7 +576,7 @@ private fun SummariesListScreenPreview() {
                             updateTime = 1728248400
                         ),
                         BaseSummaryInfo(
-                            id = 0,
+                            id = "0",
                             name = "Октябрьская революция",
                             disciplineName = "История",
                             themeName = "Theme 1",

@@ -66,7 +66,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
     if (summaryDetails.value == null) {
         TODO("loading screen")
     } else {
-        Box{
+        Box {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -215,7 +215,7 @@ fun SummaryDetailsScreen(summaryDetails: MutableState<FullSummaryInfo?>) {
                             SummaryMaterialCard(it)
                             Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                         }
-                        item{
+                        item {
                             Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraLarge))
                         }
                     }
@@ -400,7 +400,9 @@ fun SummaryMaterialCard(material: SummaryMaterial, mediaPlayer: MediaPlayer? = n
                             color = colorScheme.onSecondary,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.align(Alignment.Center).padding(horizontal = 5.dp)
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(horizontal = 5.dp)
                         )
                     }
                 }
@@ -438,8 +440,7 @@ private fun SummaryMaterialCardPreview() {
                     loadedTime = 1728248399,
                     summaryStatus = MaterialSummaryStatus.Ready,
                     useInGeneralSummary = true
-                ),
-//                mediaPlayer = mediaPlayer
+                )
             )
             Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
             SummaryMaterialCard(
@@ -448,8 +449,7 @@ private fun SummaryMaterialCardPreview() {
                     loadedTime = 1728248398,
                     summaryStatus = MaterialSummaryStatus.Ready,
                     useInGeneralSummary = true
-                ),
-//                mediaPlayer = mediaPlayer
+                )
             )
             Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
             SummaryMaterialCard(
@@ -459,8 +459,7 @@ private fun SummaryMaterialCardPreview() {
                     loadedTime = 1728248397,
                     summaryStatus = MaterialSummaryStatus.Ready,
                     useInGeneralSummary = true
-                ),
-//                mediaPlayer = mediaPlayer
+                )
             )
             Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
         }
@@ -484,10 +483,10 @@ private fun SummaryDetailsScreenPreview() {
         SummaryDetailsScreen(summaryDetails = remember {
             mutableStateOf(
                 FullSummaryInfo(
-                    id = 0,
+                    id = "0",
                     name = "Теория множеств",
-                    subject = SummarySubject(id = 0, name = "Мат. анализ"),
-                    theme = SummaryTheme(id = 0, name = "Тема 1"),
+                    subject = SummarySubject(id = "0", name = "Мат. анализ"),
+                    theme = SummaryTheme(id = "0", name = "Тема 1"),
                     type = ThemeType.Lecture,
                     createTime = 1728248400,
                     updateTime = 1728248400,

@@ -47,4 +47,12 @@
     <string name="delete">Удалить</string>
     <string name="export">Экспортировать</string>
     <string name="share">Поделиться</string>
+    <string name="last_summaries_label">Последние конспекты</string>
+    <string name="last_summaries_label_when_empty">Здесь будут ваши конспекты!</string>
+    <string name="create_summary_at_last_summaries_label">Создать конспект</string>
+    <string name="summaries_button_main_screen_label">Мои конспекты</string>
+    <string name="search_button_main_screen_label">Поиск информации</string>
+    <string name="summary_shop_button_main_screen_label">Магазин конспектов</string>
+    <string name="selftest_button_main_screen_label">Подготовка</string>
+    <string name="council_label">Полезные советы</string>
 </resources>

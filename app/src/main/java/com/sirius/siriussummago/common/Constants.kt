@@ -1,7 +1,7 @@
 package com.sirius.siriussummago.common
 
 object Constants {
-    const val BASE_API_URL = "http://147.45.104.115:8000/api/v1"
+    const val BASE_API_URL = "https://webserv.oksnet.keenetic.pro/api/v1"
 
     object Editor {
         const val UNDO = "undo"

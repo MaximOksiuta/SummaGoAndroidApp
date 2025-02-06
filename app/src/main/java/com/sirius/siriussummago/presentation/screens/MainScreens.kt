@@ -2,6 +2,9 @@ package com.sirius.siriussummago.presentation.screens
 
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +24,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -46,6 +51,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.sirius.siriussummago.R
 import com.sirius.siriussummago.presentation.dataModels.BaseSummaryInfo
 import com.sirius.siriussummago.presentation.dataModels.ThemeType
@@ -64,7 +71,7 @@ interface MainScreenDataProvider {
 }
 
 @Composable
-fun MainScreen(dataProvider: MainScreenDataProvider) {
+fun MainScreen(dataProvider: MainScreenDataProvider, navController: NavController) {
     val lastSummaries = dataProvider.getLastSummaries().collectAsStateWithLifecycle(emptyList())
     val currentAdvice =
         dataProvider.getAdvice().collectAsStateWithLifecycle(buildAnnotatedString { })
@@ -89,83 +96,123 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                         .fillMaxWidth()
                         .verticalScroll(rememberScrollState())
                 ) { // scrollable column
-                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceExtraLarge))
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                LocalExColorScheme.current.accent.color,
-                                RoundedCornerShape(24.dp)
+                    Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceLarge))
+                    AnimatedVisibility(
+                        lastSummaries.value.isNotEmpty(),
+                        enter = expandVertically(),
+                        exit = shrinkVertically()
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    LocalExColorScheme.current.accent.color,
+                                    RoundedCornerShape(24.dp)
+                                )
+                                .padding(LocalDim.current.spaceMedium)
+                        ) { // last summaries column
+                            Text(
+                                text = stringResource(R.string.last_summaries_label),
+                                style = typography.bodyLarge,
+                                color = LocalExColorScheme.current.accent.onColor
                             )
-                            .padding(LocalDim.current.spaceMedium)
-                    ) { // last summaries column
-                        Text(
-                            text = "Последние конспекты",
-                            style = typography.bodyLarge,
-                            color = LocalExColorScheme.current.accent.onColor
-                        )
-                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
-                        Box { // dividing box
-                            Row(modifier = Modifier.fillMaxWidth()) { // summaries info
+                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
+                            Box { // dividing box
+                                Row(modifier = Modifier.fillMaxWidth()) { // summaries info
 
-                                // names
-                                Column(modifier = Modifier.weight(1f)) {
-                                    for (summary_id in lastSummaries.value.indices) {
-                                        Text(
-                                            text = lastSummaries.value.getOrNull(summary_id)
-                                                ?.let { summary -> "${summary.name} (${summary.disciplineName})" }
-                                                ?: "", style = typography.bodySmall,
-                                            color = LocalExColorScheme.current.accent.onColor,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.height(16.dp)
-                                        )
-                                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
-                                    }
-                                }
-                                Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceExtraSmall))
-
-                                // types
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier.width(IntrinsicSize.Min)
-                                ) {
-                                    for (summary_id in lastSummaries.value.indices) {
-                                        Text(
-                                            text = stringResource((lastSummaries.value[summary_id].type.nameStringId)),
-                                            style = typography.bodySmall,
-                                            color = LocalExColorScheme.current.accent.onColorContainer,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                            textAlign = TextAlign.Center,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .background(
-                                                    LocalExColorScheme.current.accent.colorContainer,
-                                                    CircleShape
-                                                )
-                                                .height(16.dp)
-                                                .padding(horizontal = 6.dp)
-                                        )
-                                        Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
-                                    }
-                                }
-                            }
-                            Column {
-                                for (summary_id in lastSummaries.value.indices) {
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                    if (summary_id != (lastSummaries.value.size - 1)) {
-                                        Box(
-                                            contentAlignment = Alignment.Center,
-                                            modifier = Modifier.Companion.height(LocalDim.current.spaceMedium)
-                                        ) {
-                                            HorizontalDivider(
-                                                thickness = 1.dp,
-                                                color = colorScheme.outline
+                                    // names
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        for (summary_id in lastSummaries.value.indices.take(3)) {
+                                            Text(
+                                                text = lastSummaries.value.getOrNull(summary_id)
+                                                    ?.let { summary -> "${summary.name} (${summary.disciplineName})" }
+                                                    ?: "", style = typography.bodySmall,
+                                                color = LocalExColorScheme.current.accent.onColor,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis,
+                                                modifier = Modifier.height(16.dp)
                                             )
+                                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceExtraSmall))
+
+                                    // types
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.width(IntrinsicSize.Min)
+                                    ) {
+                                        for (summary_id in lastSummaries.value.indices) {
+                                            Text(
+                                                text = stringResource((lastSummaries.value[summary_id].type.nameStringId)),
+                                                style = typography.bodySmall,
+                                                color = LocalExColorScheme.current.accent.onColorContainer,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis,
+                                                textAlign = TextAlign.Center,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .background(
+                                                        LocalExColorScheme.current.accent.colorContainer,
+                                                        CircleShape
+                                                    )
+                                                    .height(16.dp)
+                                                    .padding(horizontal = 6.dp)
+                                            )
+                                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
                                         }
                                     }
                                 }
+                                Column {
+                                    for (summary_id in lastSummaries.value.indices) {
+                                        Spacer(modifier = Modifier.height(16.dp))
+                                        if (summary_id != (lastSummaries.value.size - 1)) {
+                                            Box(
+                                                contentAlignment = Alignment.Center,
+                                                modifier = Modifier.Companion.height(LocalDim.current.spaceMedium)
+                                            ) {
+                                                HorizontalDivider(
+                                                    thickness = 1.dp,
+                                                    color = colorScheme.outline
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    AnimatedVisibility(
+                        lastSummaries.value.isEmpty(),
+                        enter = expandVertically(),
+                        exit = shrinkVertically()
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    LocalExColorScheme.current.accent.color,
+                                    RoundedCornerShape(24.dp)
+                                )
+                                .padding(LocalDim.current.spaceMedium),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) { // last summaries column
+                            Text(
+                                text = stringResource(R.string.last_summaries_label_when_empty),
+                                style = typography.bodyLarge,
+                                color = LocalExColorScheme.current.accent.onColor
+                            )
+                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
+                            Button(colors = ButtonDefaults.buttonColors(
+                                containerColor = LocalExColorScheme.current.accent.colorContainer
+                            ), onClick = {
+                                TODO("Create summary")
+                            }) {
+                                Text(
+                                    text = stringResource(R.string.create_summary_at_last_summaries_label),
+                                    color = LocalExColorScheme.current.accent.onColorContainer
+                                )
                             }
                         }
                     }
@@ -176,7 +223,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                             modifier = Modifier.weight(1f),
                             image = R.drawable.logo,
                             backgroundColor = colorScheme.secondaryContainer,
-                            name = "Создание конспектов"
+                            name = stringResource(R.string.summaries_button_main_screen_label)
                         ) {
 
                         }
@@ -185,7 +232,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                             modifier = Modifier.weight(1f),
                             image = R.drawable.search_info,
                             backgroundColor = colorScheme.tertiaryContainer,
-                            name = "Поиск информации"
+                            name = stringResource(R.string.search_button_main_screen_label)
                         ) {
 
                         }
@@ -196,7 +243,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                             modifier = Modifier.weight(1f),
                             image = R.drawable.summaries_store,
                             backgroundColor = colorScheme.primaryContainer,
-                            name = "Магазин конспектов"
+                            name = stringResource(R.string.summary_shop_button_main_screen_label)
                         ) {
 
                         }
@@ -205,7 +252,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                             modifier = Modifier.weight(1f),
                             image = R.drawable.self_testing,
                             backgroundColor = colorScheme.secondaryContainer,
-                            name = "Самотестирование"
+                            name = stringResource(R.string.selftest_button_main_screen_label)
                         ) {
 
                         }
@@ -226,7 +273,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                     ) {
                         Column(modifier = Modifier.padding(15.dp)) {
                             Text(
-                                text = "Полезные советы",
+                                text = stringResource(R.string.council_label),
                                 style = typography.titleMedium,
                                 color = colorScheme.onSecondaryContainer
                             )
@@ -247,7 +294,7 @@ fun MainScreen(dataProvider: MainScreenDataProvider) {
                 // Shader
                 Box(
                     modifier = Modifier.Companion
-                        .height(LocalDim.current.spaceExtraLarge)
+                        .height(LocalDim.current.spaceLarge)
                         .fillMaxWidth()
                         .background(
                             brush = Brush.verticalGradient(
@@ -335,52 +382,55 @@ fun FeatureButton(
 @Composable
 private fun MainScreenPreview() {
     SummaGoTheme {
-        MainScreen(dataProvider = object : MainScreenDataProvider {
-            override fun getLastSummaries(): Flow<List<BaseSummaryInfo>> = flow {
-                emit(
-                    listOf<BaseSummaryInfo>(
-                        BaseSummaryInfo(
-                            id = 0,
-                            name = "Теория множеств",
-                            disciplineName = "Мат. анализ",
-                            themeName = "Theme 1",
-                            type = ThemeType.Lecture,
-                            createTime = 1728248400,
-                            updateTime = 1728248400
-                        ),
-                        BaseSummaryInfo(
-                            id = 0,
-                            name = "Расстояние Лихтенштейна",
-                            disciplineName = "Алг. и структуры данных",
-                            themeName = "Theme 1",
-                            type = ThemeType.Seminar,
-                            createTime = 1728248400,
-                            updateTime = 1728248400
-                        ),
-                        BaseSummaryInfo(
-                            id = 0,
-                            name = "Октябрьская революция",
-                            disciplineName = "История",
-                            themeName = "Theme 1",
-                            type = ThemeType.Lecture,
-                            createTime = 1728248400,
-                            updateTime = 1728248400
+        val navController = rememberNavController()
+        MainScreen(
+            navController = navController,
+            dataProvider = object : MainScreenDataProvider {
+                override fun getLastSummaries(): Flow<List<BaseSummaryInfo>> = flow {
+                    emit(
+                        listOf<BaseSummaryInfo>(
+                            BaseSummaryInfo(
+                                id = "0",
+                                name = "Теория множеств",
+                                disciplineName = "Мат. анализ",
+                                themeName = "Theme 1",
+                                type = ThemeType.Lecture,
+                                createTime = 1728248400,
+                                updateTime = 1728248400
+                            ),
+                            BaseSummaryInfo(
+                                id = "0",
+                                name = "Расстояние Лихтенштейна",
+                                disciplineName = "Алг. и структуры данных",
+                                themeName = "Theme 1",
+                                type = ThemeType.Seminar,
+                                createTime = 1728248400,
+                                updateTime = 1728248400
+                            ),
+                            BaseSummaryInfo(
+                                id = "0",
+                                name = "Октябрьская революция",
+                                disciplineName = "История",
+                                themeName = "Theme 1",
+                                type = ThemeType.Lecture,
+                                createTime = 1728248400,
+                                updateTime = 1728248400
+                            )
                         )
                     )
-                )
-            }
+                }
 
-            override fun getAdvice(): Flow<AnnotatedString> = flow {
-                emit(buildAnnotatedString {
-                    pushStyle(style = SpanStyle(fontWeight = FontWeight.ExtraBold))
-                    append("Работайте с конспектами")
+                override fun getAdvice(): Flow<AnnotatedString> = flow {
+                    emit(buildAnnotatedString {
+                        pushStyle(style = SpanStyle(fontWeight = FontWeight.ExtraBold))
+                        append("Работайте с конспектами")
 
-                    pushStyle(style = SpanStyle(fontWeight = FontWeight.Normal))
-                    append(" — регулярно пересматривайте записи и материалы лекций, это облегчит подготовку к экзаменам.")
-                })
-            }
+                        pushStyle(style = SpanStyle(fontWeight = FontWeight.Normal))
+                        append(" — регулярно пересматривайте записи и материалы лекций, это облегчит подготовку к экзаменам.")
+                    })
+                }
 
-        })
+            })
     }
 }
 

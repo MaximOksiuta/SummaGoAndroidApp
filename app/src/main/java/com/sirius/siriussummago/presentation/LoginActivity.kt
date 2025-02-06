@@ -3,11 +3,9 @@ package com.sirius.siriussummago.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
@@ -16,8 +14,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sirius.siriussummago.presentation.dataModels.AuthState
-
-import com.sirius.siriussummago.presentation.mdeditor.NoteViewModel
 import com.sirius.siriussummago.presentation.screens.auth.SignUp2Screen
 import com.sirius.siriussummago.presentation.screens.auth.YandexAuthScreen
 import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
@@ -27,21 +23,10 @@ import com.yandex.authsdk.YandexAuthOptions
 import com.yandex.authsdk.YandexAuthResult
 import com.yandex.authsdk.YandexAuthSdk
 import com.yandex.authsdk.internal.strategy.LoginType
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.concurrent.thread
 
 class LoginActivity : ComponentActivity() {
     private val sharedViewModel: SharedViewModel by viewModel()
-
-    init {
-        thread {
-            runBlocking {
-
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +49,9 @@ class LoginActivity : ComponentActivity() {
                             finish()
                         }
 
-                        AuthState.Unauthenticated -> {}
+                        AuthState.Unauthenticated -> {
+
+                        }
                     }
                     NavHost(
                         modifier = Modifier.padding(innerPadding),
