@@ -3,17 +3,20 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    alias(libs.plugins.googleKsp)
+    alias(libs.plugins.room)
+    id("kotlin-parcelize")
     kotlin("plugin.serialization") version "2.1.0"
 }
 
 android {
     namespace = "com.sirius.siriussummago"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.sirius.siriussummago"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -37,6 +40,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
     buildFeatures {
         compose = true
@@ -113,10 +120,16 @@ dependencies {
     // Koin testing
     testImplementation (libs.koin.test)
 
-
+    // Ktor client
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+
+    // Room
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1") // Библиотека "Room"
+    ksp("androidx.room:room-compiler:2.6.1") // Кодогенератор
+    implementation("androidx.room:room-ktx:2.6.1")
 
 }

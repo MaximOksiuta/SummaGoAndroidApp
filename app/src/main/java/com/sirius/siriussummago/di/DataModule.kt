@@ -1,5 +1,8 @@
 package com.sirius.siriussummago.di
 
+import androidx.room.Room
+import com.sirius.siriussummago.data.localDatabase.MainDao
+import com.sirius.siriussummago.data.localDatabase.MainDatabase
 import com.sirius.siriussummago.data.localstorage.SharedPrefs
 import com.sirius.siriussummago.data.repositories.LocalRepositoryImpl
 import com.sirius.siriussummago.data.repositories.NetworkRepositoryImpl
@@ -19,5 +22,13 @@ val dataModule = module {
 
     single<SharedPrefs> {
         SharedPrefs(get())
+    }
+
+    single<MainDatabase> {
+        Room.databaseBuilder(get(), MainDatabase::class.java, "main_db").build()
+    }
+
+    single<MainDao> {
+        get<MainDatabase>().mainDao
     }
 }

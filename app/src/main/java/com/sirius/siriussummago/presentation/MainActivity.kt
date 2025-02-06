@@ -12,9 +12,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sirius.siriussummago.presentation.dataModels.BaseSummaryInfo
+import com.sirius.siriussummago.presentation.dataModels.SummarySubject
 import com.sirius.siriussummago.presentation.mdeditor.NoteViewModel
 import com.sirius.siriussummago.presentation.screens.MainScreen
 import com.sirius.siriussummago.presentation.screens.MainScreenDataProvider
+import com.sirius.siriussummago.presentation.screens.SummariesListScreen
+import com.sirius.siriussummago.presentation.screens.SummariesListScreenDataProvider
 import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
 import com.sirius.siriussummago.presentation.viewModel.SharedViewModel
 import kotlinx.coroutines.flow.Flow
@@ -54,6 +57,19 @@ class MainActivity : ComponentActivity() {
                                 }
                             })
                     }
+
+                    composable(MainActivityScreens.SummariesList.name) {
+                        SummariesListScreen(object : SummariesListScreenDataProvider {
+                            override fun getSubjects(): Flow<List<SummarySubject>> {
+                                TODO()
+                            }
+
+                            override fun getSummaries(): Flow<List<BaseSummaryInfo>> {
+                                TODO()
+                            }
+
+                        })
+                    }
                 }
             }
         }
@@ -61,5 +77,6 @@ class MainActivity : ComponentActivity() {
 }
 
 enum class MainActivityScreens {
-    Main
+    Main,
+    SummariesList
 }
