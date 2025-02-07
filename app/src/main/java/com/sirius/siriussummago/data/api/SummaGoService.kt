@@ -26,7 +26,7 @@ object SummaGoService {
     suspend fun checkToken(token: String): Boolean {
         Log.d("SummaGoService", "Send request to check token $token")
         val response = client.post(Constants.BASE_API_URL + "/user/check") {
-            header("token", token)
+            header("Authorization", "Bearer $token")
         }
 
         if (response.status.isSuccess()) {
@@ -40,7 +40,7 @@ object SummaGoService {
         Log.d("SummaGoService", "signUp with name:$name organization:$organization role:$role")
 
         val response = client.post(Constants.BASE_API_URL + "/user/register") {
-            header("token", token)
+            header("Authorization", "Bearer $token")
             contentType(ContentType.Application.Json)
             setBody(
                 SignUpRequestModel(
@@ -58,6 +58,11 @@ object SummaGoService {
             Log.d("SummaGoService", "signUp success")
         }
     }
+
+    // subjects manage
+//    suspend fun getAllSubjects(): List<{
+//        Log.d("SummaGoService", "getAllSubjects")
+//    }
 
 
 }

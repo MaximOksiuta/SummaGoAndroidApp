@@ -23,7 +23,7 @@ class SharedViewModel(
     private val _errors = MutableSharedFlow<Error>()
     val errors: SharedFlow<Error> = _errors
 
-    private val _authState = MutableStateFlow<AuthState>(AuthState.Unauthenticated)
+    private val _authState = MutableStateFlow<AuthState>(AuthState.NotInitialized)
     val authState: MutableStateFlow<AuthState> = _authState
 
     init {
@@ -42,21 +42,21 @@ class SharedViewModel(
     fun saveToken(token: String) {
         Log.d("SharedViewModel", "saveToken: $token")
         viewModelScope.launch {
-            authUseCase.execute(token)
+            authUseCase.updateState(token)
         }
     }
-
-    fun signUp(name: String, organization: String, role: String) {
-        viewModelScope.launch {
-            authUseCase.signUp(name, organization, role)
-        }
-    }
-
 
     // SignUp 2 states
     val signUpName: MutableState<String> = mutableStateOf("")
     val signUpOrganization: MutableState<String> = mutableStateOf("")
     val signUpRole: MutableState<String> = mutableStateOf("")
+
+
+    fun signUp() {
+        viewModelScope.launch {
+            authUseCase.signUp(signUpName.value, signUpOrganization.value, signUpRole.value)
+        }
+    }
 
     // Main screen info
     private val _allSummaries = MutableSharedFlow<List<BaseSummaryInfo>>()

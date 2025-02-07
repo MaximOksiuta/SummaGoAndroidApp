@@ -11,7 +11,7 @@ class LocalRepositoryImpl(private val sharedPrefs: SharedPrefs) : LocalRepositor
         sharedPrefs.token = token
     }
 
-    override fun removerToken() {
+    override fun removeToken() {
         saveToken("")
     }
 }

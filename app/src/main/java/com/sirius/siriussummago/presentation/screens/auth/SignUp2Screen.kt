@@ -1,13 +1,9 @@
 package com.sirius.siriussummago.presentation.screens.auth
 
 import android.content.res.Configuration
-import android.util.Log
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,9 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,23 +21,16 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.sirius.siriussummago.R
-import com.sirius.siriussummago.presentation.MainActivityScreens
-import com.sirius.siriussummago.presentation.noRippleClickable
 import com.sirius.siriussummago.presentation.ui.NextButton
 import com.sirius.siriussummago.presentation.ui.theme.LocalDim
 import com.sirius.siriussummago.presentation.ui.theme.SummaGoTheme
@@ -92,10 +80,11 @@ fun SignUp2Screen(
 
         // Email field
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = name.value,
             onValueChange = { name.value = it },
             shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
             leadingIcon = {
                 Icon(
                     painterResource(R.drawable.ic_person),
@@ -123,10 +112,11 @@ fun SignUp2Screen(
 
         // Password field
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = organization.value,
             onValueChange = { organization.value = it },
             shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
             leadingIcon = {
                 Icon(
                     painterResource(R.drawable.ic_work_place),
@@ -153,13 +143,13 @@ fun SignUp2Screen(
         Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = role.value,
             onValueChange = {
                 role.value = it
             },
             shape = MaterialTheme.shapes.medium,
-            modifier = Modifier
-                .fillMaxWidth(),
+            singleLine = true,
             leadingIcon = {
                 Icon(
                     painterResource(R.drawable.ic_role),
@@ -180,7 +170,10 @@ fun SignUp2Screen(
                 focusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
                 errorBorderColor = MaterialTheme.colorScheme.error
             ),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(onNext = {
+                sharedViewModel?.signUp()
+            })
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -189,8 +182,8 @@ fun SignUp2Screen(
             NextButton(
                 modifier = Modifier.offset(x = LocalDim.current.spaceLarge),
                 onClick = {
-                    sharedViewModel?.signUp(name = name.value, organization = organization.value, role = role.value)
-                }
+                    sharedViewModel?.signUp()
+                },
             )
         }
     }

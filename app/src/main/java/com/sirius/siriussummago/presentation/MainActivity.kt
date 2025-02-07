@@ -61,11 +61,15 @@ class MainActivity : ComponentActivity() {
                     composable(MainActivityScreens.SummariesList.name) {
                         SummariesListScreen(object : SummariesListScreenDataProvider {
                             override fun getSubjects(): Flow<List<SummarySubject>> {
-                                TODO()
+                                return flow {
+
+                                }
                             }
 
                             override fun getSummaries(): Flow<List<BaseSummaryInfo>> {
-                                TODO()
+                                return flow {
+
+                                }
                             }
 
                         })

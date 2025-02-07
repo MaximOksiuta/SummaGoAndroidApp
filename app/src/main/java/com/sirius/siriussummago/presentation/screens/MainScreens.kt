@@ -102,79 +102,85 @@ fun MainScreen(dataProvider: MainScreenDataProvider, navController: NavControlle
                         enter = expandVertically(),
                         exit = shrinkVertically()
                     ) {
-                        Column(
+                        Card(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .background(
-                                    LocalExColorScheme.current.accent.color,
-                                    RoundedCornerShape(24.dp)
-                                )
-                                .padding(LocalDim.current.spaceMedium)
-                        ) { // last summaries column
-                            Text(
-                                text = stringResource(R.string.last_summaries_label),
-                                style = typography.bodyLarge,
-                                color = LocalExColorScheme.current.accent.onColor
+                                .fillMaxWidth(),
+                            shape = RoundedCornerShape(24.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = LocalExColorScheme.current.accent.color,
+                                disabledContainerColor = LocalExColorScheme.current.accent.color
                             )
-                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
-                            Box { // dividing box
-                                Row(modifier = Modifier.fillMaxWidth()) { // summaries info
+                        ) { // last summaries column
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(LocalDim.current.spaceMedium)
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.last_summaries_label),
+                                    style = typography.bodyLarge,
+                                    color = LocalExColorScheme.current.accent.onColor
+                                )
+                                Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
+                                Box { // dividing box
+                                    Row(modifier = Modifier.fillMaxWidth()) { // summaries info
 
-                                    // names
-                                    Column(modifier = Modifier.weight(1f)) {
-                                        for (summary_id in lastSummaries.value.indices.take(3)) {
-                                            Text(
-                                                text = lastSummaries.value.getOrNull(summary_id)
-                                                    ?.let { summary -> "${summary.name} (${summary.disciplineName})" }
-                                                    ?: "", style = typography.bodySmall,
-                                                color = LocalExColorScheme.current.accent.onColor,
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis,
-                                                modifier = Modifier.height(16.dp)
-                                            )
-                                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
-                                        }
-                                    }
-                                    Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceExtraSmall))
-
-                                    // types
-                                    Column(
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        modifier = Modifier.width(IntrinsicSize.Min)
-                                    ) {
-                                        for (summary_id in lastSummaries.value.indices) {
-                                            Text(
-                                                text = stringResource((lastSummaries.value[summary_id].type.nameStringId)),
-                                                style = typography.bodySmall,
-                                                color = LocalExColorScheme.current.accent.onColorContainer,
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis,
-                                                textAlign = TextAlign.Center,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .background(
-                                                        LocalExColorScheme.current.accent.colorContainer,
-                                                        CircleShape
-                                                    )
-                                                    .height(16.dp)
-                                                    .padding(horizontal = 6.dp)
-                                            )
-                                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
-                                        }
-                                    }
-                                }
-                                Column {
-                                    for (summary_id in lastSummaries.value.indices) {
-                                        Spacer(modifier = Modifier.height(16.dp))
-                                        if (summary_id != (lastSummaries.value.size - 1)) {
-                                            Box(
-                                                contentAlignment = Alignment.Center,
-                                                modifier = Modifier.Companion.height(LocalDim.current.spaceMedium)
-                                            ) {
-                                                HorizontalDivider(
-                                                    thickness = 1.dp,
-                                                    color = colorScheme.outline
+                                        // names
+                                        Column(modifier = Modifier.weight(1f)) {
+                                            for (summary_id in lastSummaries.value.indices.take(3)) {
+                                                Text(
+                                                    text = lastSummaries.value.getOrNull(summary_id)
+                                                        ?.let { summary -> "${summary.name} (${summary.disciplineName})" }
+                                                        ?: "", style = typography.bodySmall,
+                                                    color = LocalExColorScheme.current.accent.onColor,
+                                                    maxLines = 1,
+                                                    overflow = TextOverflow.Ellipsis,
+                                                    modifier = Modifier.height(16.dp)
                                                 )
+                                                Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
+                                            }
+                                        }
+                                        Spacer(modifier = Modifier.Companion.width(LocalDim.current.spaceExtraSmall))
+
+                                        // types
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier.width(IntrinsicSize.Min)
+                                        ) {
+                                            for (summary_id in lastSummaries.value.indices) {
+                                                Text(
+                                                    text = stringResource((lastSummaries.value[summary_id].type.nameStringId)),
+                                                    style = typography.bodySmall,
+                                                    color = LocalExColorScheme.current.accent.onColorContainer,
+                                                    maxLines = 1,
+                                                    overflow = TextOverflow.Ellipsis,
+                                                    textAlign = TextAlign.Center,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .background(
+                                                            LocalExColorScheme.current.accent.colorContainer,
+                                                            CircleShape
+                                                        )
+                                                        .height(16.dp)
+                                                        .padding(horizontal = 6.dp)
+                                                )
+                                                Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
+                                            }
+                                        }
+                                    }
+                                    Column {
+                                        for (summary_id in lastSummaries.value.indices) {
+                                            Spacer(modifier = Modifier.height(16.dp))
+                                            if (summary_id != (lastSummaries.value.size - 1)) {
+                                                Box(
+                                                    contentAlignment = Alignment.Center,
+                                                    modifier = Modifier.Companion.height(LocalDim.current.spaceMedium)
+                                                ) {
+                                                    HorizontalDivider(
+                                                        thickness = 1.dp,
+                                                        color = colorScheme.outline
+                                                    )
+                                                }
                                             }
                                         }
                                     }
@@ -182,37 +188,43 @@ fun MainScreen(dataProvider: MainScreenDataProvider, navController: NavControlle
                             }
                         }
                     }
-
+                    // Pass for empty summaries
                     AnimatedVisibility(
                         lastSummaries.value.isEmpty(),
                         enter = expandVertically(),
                         exit = shrinkVertically()
                     ) {
-                        Column(
+                        Card(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .background(
-                                    LocalExColorScheme.current.accent.color,
-                                    RoundedCornerShape(24.dp)
-                                )
-                                .padding(LocalDim.current.spaceMedium),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) { // last summaries column
-                            Text(
-                                text = stringResource(R.string.last_summaries_label_when_empty),
-                                style = typography.bodyLarge,
-                                color = LocalExColorScheme.current.accent.onColor
+                                .fillMaxWidth(),
+                            shape = RoundedCornerShape(24.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = LocalExColorScheme.current.accent.color,
+                                disabledContainerColor = LocalExColorScheme.current.accent.color
                             )
-                            Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
-                            Button(colors = ButtonDefaults.buttonColors(
-                                containerColor = LocalExColorScheme.current.accent.colorContainer
-                            ), onClick = {
-                                TODO("Create summary")
-                            }) {
+                        ) { // empty last summaries label
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(LocalDim.current.spaceMedium),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
                                 Text(
-                                    text = stringResource(R.string.create_summary_at_last_summaries_label),
-                                    color = LocalExColorScheme.current.accent.onColorContainer
+                                    text = stringResource(R.string.last_summaries_label_when_empty),
+                                    style = typography.bodyLarge,
+                                    color = LocalExColorScheme.current.accent.onColor
                                 )
+                                Spacer(modifier = Modifier.Companion.height(LocalDim.current.spaceMedium))
+                                Button(colors = ButtonDefaults.buttonColors(
+                                    containerColor = LocalExColorScheme.current.accent.colorContainer
+                                ), onClick = {
+                                    TODO("Create summary")
+                                }) {
+                                    Text(
+                                        text = stringResource(R.string.create_summary_at_last_summaries_label),
+                                        color = LocalExColorScheme.current.accent.onColorContainer
+                                    )
+                                }
                             }
                         }
                     }

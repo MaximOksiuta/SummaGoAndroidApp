@@ -55,4 +55,5 @@
     <string name="summary_shop_button_main_screen_label">Магазин конспектов</string>
     <string name="selftest_button_main_screen_label">Подготовка</string>
     <string name="council_label">Полезные советы</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

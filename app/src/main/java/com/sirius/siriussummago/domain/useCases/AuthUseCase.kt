@@ -12,7 +12,7 @@ class AuthUseCase(
     private val networkRepository: NetworkRepository,
     private val localRepository: LocalRepository
 ) : ErrorProtectedUseCase() {
-    suspend fun execute(token: String) {
+    suspend fun updateState(token: String) {
         try {
             when (networkRepository.getUserAuthState(token)) {
                 true -> {
@@ -42,16 +42,18 @@ class AuthUseCase(
     }
 
     suspend fun updateAuthStateFromLocal() {
+        Log.d("AuthUseCase", "updateAuthStateFromLocal called")
         if (localRepository.token == "") {
             Log.d("AuthUseCase", "token not found in SharedPreferences; authState: Unauthenticated")
             _authState.emit(AuthState.Unauthenticated)
         } else {
+            Log.d("AuthUseCase", "token found in SharedPreferences;")
             var receivedAuthState: Boolean? = null
             try {
                 receivedAuthState = networkRepository.getUserAuthState(localRepository.token)
             } catch (e: Exception) {
                 Log.d("AuthUseCase", "Token check failed. Removing from SharedPreferences")
-                localRepository.removerToken()
+                localRepository.removeToken()
                 e.printStackTrace()
             }
 
@@ -75,6 +77,6 @@ class AuthUseCase(
         }
     }
 
-    private val _authState = MutableStateFlow<AuthState>(AuthState.Unauthenticated)
+    private val _authState = MutableStateFlow<AuthState>(AuthState.NotInitialized)
     val authState: StateFlow<AuthState> = _authState
 }

@@ -2,6 +2,6 @@ package com.sirius.siriussummago.domain.interfaces
 
 interface LocalRepository {
     fun saveToken(token: String)
-    fun removerToken()
+    fun removeToken()
     val token: String
 }

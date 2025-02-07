@@ -35,10 +35,10 @@ class LoginActivity : ComponentActivity() {
         val loginOptions = YandexAuthLoginOptions(loginType = LoginType.CHROME_TAB)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
+            val authState = sharedViewModel.authState.collectAsStateWithLifecycle()
             SummaGoTheme {
                 Scaffold { innerPadding ->
-                    val navController = rememberNavController()
-                    val authState = sharedViewModel.authState.collectAsStateWithLifecycle()
                     when (authState.value) {
                         AuthState.NewUser -> {
                             navController.navigate(LoginActivityDestinations.SignUp.name)
@@ -51,6 +51,10 @@ class LoginActivity : ComponentActivity() {
 
                         AuthState.Unauthenticated -> {
 
+                        }
+
+                        AuthState.NotInitialized -> {
+                            throw IllegalStateException("Auth state is not initialized, but LoginActivity was started!")
                         }
                     }
                     NavHost(
